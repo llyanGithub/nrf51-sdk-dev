@@ -1,4 +1,6 @@
 *~
 *.o
 _build/
-
+*.swp
+tags
+cscope.*
