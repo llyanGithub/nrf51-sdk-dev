@@ -202,15 +202,18 @@ clean:
 
 cleanobj:
 	$(RM) $(BUILD_DIRECTORIES)/*.o
+flash_erase_all:
+	@echo nrfjprog.sh --erase-all
+	nrfjprog.sh --erase-all
 
-flash: $(MAKECMDGOALS)
+flash:
 	@echo Flashing: $(OUTPUT_BINARY_DIRECTORY)/nrf51422_xxac.hex
-	nrfjprog_cli.py erase
-	nrfjprog_cli.py program -f $(OUTPUT_BINARY_DIRECTORY)/nrf51422_xxac.hex 
-	nrfjprog_cli.py reset
+	nrfjprog.sh --flash $(OUTPUT_BINARY_DIRECTORY)/nrf51422_xxac.hex
+	nrfjprog.sh --reset
 
 ## Flash softdevice
 flash_softdevice:
 	@echo Flashing: s110_nrf51_8.0.0_softdevice.hex
-	nrfjprog_cli.py program -f ../../components/softdevice/s120/hex/s120_nrf51_2.1.0_softdevice.hex
-	nrfjprog_cli.py reset
+	nrfjprog.sh --erase-all
+	nrfjprog.sh --flash-softdevice  ../../components/softdevice/s110/hex/s110_nrf51_8.0.0_softdevice.hex
+	nrfjprog.sh --reset
